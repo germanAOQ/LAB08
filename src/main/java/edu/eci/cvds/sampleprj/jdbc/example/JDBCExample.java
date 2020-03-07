@@ -21,12 +21,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 /**
  *
@@ -59,8 +57,8 @@ public class JDBCExample {
             System.out.println("-----------------------");
             
             
-            int suCodigoECI=2148108;
-            registrarNuevoProducto(con, suCodigoECI, "Nicolas", 99999999);            
+            int suCodigoECI=20134423;
+            registrarNuevoProducto(con, suCodigoECI, "SU NOMBRE", 99999999);            
             con.commit();
                         
             
@@ -86,15 +84,7 @@ public class JDBCExample {
         //Asignar parámetros
         //usar 'execute'
 
-    	 try {
- 			Statement consulta=con.createStatement();
- 			
- 			consulta.executeUpdate("INSERT INTO ORD_PRODUCTOS (codigo,nombre,precio) VALUES (" +codigo+",'"+nombre+"',"+precio+");");	
-
- 		} catch (SQLException e) {
- 			System.out.println("NO SE PUDO HACER LA CONEXION");
- 			e.printStackTrace();
- 		}
+        
         con.commit();
         
     }
@@ -106,26 +96,13 @@ public class JDBCExample {
      * @return 
      */
     public static List<String> nombresProductosPedido(Connection con, int codigoPedido){
-    	//Crear prepared statement
+        List<String> np=new LinkedList<>();
+        
+        //Crear prepared statement
         //asignar parámetros
         //usar executeQuery
         //Sacar resultados del ResultSet
         //Llenar la lista y retornarla
-        List<String> np=new LinkedList<>();
-        try {
-			Statement consulta=con.createStatement();
-			
-			ResultSet resultado=consulta.executeQuery("SELECT pedido_fk,nombre FROM ORD_DETALLE_PEDIDO AS t1 \r\n" + 
-					"INNER JOIN ORD_PRODUCTOS AS t2 ON t1.producto_fk = t2.codigo\r\n" + 
-					"WHERE pedido_fk="+codigoPedido);	
-			while (resultado.next()) {
-				np.add("CODIGO PEDIDO: "+resultado.getString("pedido_fk")+" "+"NOMBRE PRODUCTO: "+ resultado.getString("nombre"));
-			}
-		} catch (SQLException e) {
-			System.out.println("NO SE PUDO HACER LA CONEXION");
-			e.printStackTrace();
-		}
-       
         
         return np;
     }
@@ -138,27 +115,13 @@ public class JDBCExample {
      * @return el costo total del pedido (suma de: cantidades*precios)
      */
     public static int valorTotalPedido(Connection con, int codigoPedido){
-        int result=0;
+        
         //Crear prepared statement
         //asignar parámetros
         //usar executeQuery
         //Sacar resultado del ResultSet
-    	try {
-			Statement consulta2=con.createStatement();
-			
-			ResultSet resultado2=consulta2.executeQuery("SELECT sum(precio) AS precio_total FROM ORD_DETALLE_PEDIDO AS t1 " + 
-					"INNER JOIN ORD_PRODUCTOS AS t2 ON t1.producto_fk = t2.codigo " + 
-					"WHERE pedido_fk="+codigoPedido);	
-			resultado2.next();
-			result=Integer.parseInt(resultado2.getString("precio_total"));
-			
-		} catch (SQLException e) {
-			System.out.println("NO SE PUDO HACER LA CONEXION");
-			e.printStackTrace();
-		}
-    	
         
-        return result;
+        return 0;
     }
     
 
