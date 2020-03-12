@@ -1,3 +1,3 @@
 ### LABORATORIO 7 INTEGRANTES
-German Ospina
+German Ospina<br>
 Nicolas Ortega
