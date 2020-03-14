@@ -21,12 +21,17 @@ package edu.eci.cvds.samples.services.client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 
 /**
  *
@@ -62,17 +67,29 @@ public class MyBatisExample {
     public static void main(String args[]) throws SQLException {
 
         SqlSessionFactory sessionfact = getSqlSessionFactory();
+        
+		//Crear el mapper y usarlo:
         SqlSession sqlss = sessionfact.openSession();
+        //Crear el mapper y usarlo:
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
+        ItemMapper im=sqlss.getMapper(ItemMapper.class);
+		
+        //cm 
         System.out.println(cm.consultarClientes());
-  
-        
-        
-        
+        //Consulta usuario Roberto
+
+        System.out.println(cm.consultarCliente(447744114));
+        Date date1 = null;
+        Date date2 = null;
+		try {
+			date1 = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1998");
+			date2 = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1999");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} 
+		cm.agregarItemRentadoACliente(447744114, 1111, date1, date2);
+        //im.insertarItem(111111, "Tapabocas", "Prevenir esparcimiento de particulas",date1 ,10,"prueba", "aseo",2);
         sqlss.commit();
-        
-        
-        sqlss.close();
 
         
         
