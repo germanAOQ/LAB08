@@ -87,8 +87,8 @@ public class MyBatisExample {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} 
-		cm.agregarItemRentadoACliente(447744114, 1111, date1, date2);
-        //im.insertarItem(111111, "Tapabocas", "Prevenir esparcimiento de particulas",date1 ,10,"prueba", "aseo",2);
+		//cm.agregarItemRentadoACliente(2132623,-33, 2, date1, date2);
+        im.insertarItem(111111, "Tapabocas", "Prevenir esparcimiento de particulas",date1 ,10,"prueba", "aseo",2);
         sqlss.commit();
 
         

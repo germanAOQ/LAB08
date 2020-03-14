@@ -8,7 +8,7 @@
 
 	<insert parameterType='map' id='insertarItem'>
 		
-		insert into VI_ITEMS(id, nombre, descripcion, fechalanzamiento, tarifaxdia, formatorenta, genero, TIPOITEM_id) values(#{item.id}, #{item.nombre}, #{item.descripcion}, #{item.fechaLanzamiento}, #{item.tarifaxDia},#{item.formatoRenta} ,#{item.genero}, #{item.tipo.id})
+		insert into VI_ITEMS(id, nombre, descripcion, fechalanzamiento, tarifaxdia, formatorenta, genero, TIPOITEM_id) values(#{id}, #{nombre}, #{descripcion}, #{fechaLanzamiento}, #{tarifaxDia},#{formatoRenta} ,#{genero}, #{tipo_id})
 	
 	</insert>
 

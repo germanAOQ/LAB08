@@ -20,7 +20,7 @@ public interface ItemMapper {
     
     //public void insertarItem(Item it);
 
-	public void insertarItem(int id, String nombre, String descripcion, Date fechalanzamiento, int tarifaxdia, String formatorenta, String genero, int TIPOITEM_id);
+	public void insertarItem(@Param("id") int id,@Param("nombre") String nombre,@Param("descripcion") String descripcion,@Param("fechaLanzamiento") Date fechalanzamiento,@Param("tarifaxDia") int tarifaxdia,@Param("formatoRenta") String formatorenta,@Param("genero") String genero,@Param("tipo_id") int TIPOITEM_id);
 
         
 }

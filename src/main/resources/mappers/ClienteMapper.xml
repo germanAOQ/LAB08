@@ -35,7 +35,7 @@
     </select>
     
     <insert parameterType="map" id="agregarItemRentadoACliente">
-            insert into VI_ITEMRENTADO(id, CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta) VALUES(#{idit}, #{idcli}, #{idit}, #{fein}, #{fefn})
+            insert into VI_ITEMRENTADO(id, CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta) VALUES(#{idpr}, #{idcli}, #{idit}, #{fein}, #{fefn})
     </insert>
 
 	<select parameterType="map" id="consultarClientes" resultMap="ClienteResult">
