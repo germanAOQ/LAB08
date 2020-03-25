@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 
+import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 
 public interface ClienteDAO {
