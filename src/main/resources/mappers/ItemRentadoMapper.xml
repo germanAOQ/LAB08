@@ -5,6 +5,12 @@
   
 <mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper">
 
+	<insert parameterType="map" id="insertarItemRentado">
+	insert into VI_ITEMRENTADO (id,CLIENTES_documento,ITEMS_id,fechainiciorenta,fechafinrenta) values (#{id},#{cliente},#{item},#{fechainiciorenta},#{fechafinrenta})
+	</insert>
+	
+	
+	
     <resultMap type='ItemRentado' id='ItemRentadoResult'>
 		<id property='id' column='id'/>
 		<result property='fechainiciorenta' column='fechainiciorenta'/>

@@ -4,8 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import edu.eci.cvds.sampleprj.dao.ClienteDAO;
 import edu.eci.cvds.sampleprj.dao.ItemDAO;
+import edu.eci.cvds.sampleprj.dao.ItemRentadoDAO;
 import edu.eci.cvds.sampleprj.dao.PersistenceException;
-
+import edu.eci.cvds.sampleprj.dao.TipoItemDAO;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
@@ -13,6 +14,7 @@ import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -23,26 +25,33 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
    private ItemDAO itemDAO;
    @Inject
    private ClienteDAO clienteDAO;
+   //@Inject
+   //private TipoItemDAO tipoItemDAO;
+   @Inject
+   private ItemRentadoDAO itemRentadoDAO;
 
 
    @Override
-   public int valorMultaRetrasoxDia(int itemId) {
-       throw new UnsupportedOperationException("Not supported yet.");
+   public int valorMultaRetrasoxDia(int itemId){
+	   return itemDAO.consultarValorMulta(itemId);
+	   
    }
 
    @Override
    public Cliente consultarCliente(long docu) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   int id = (int) docu;
+	   return clienteDAO.load(id);
    }
 
    @Override
    public List<ItemRentado> consultarItemsCliente(long idcliente) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+       Cliente cliente = consultarCliente(idcliente);
+       return cliente.getRentados();
    }
 
    @Override
    public List<Cliente> consultarClientes() throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+       return clienteDAO.consultarCliente();
    }
 
    @Override
@@ -56,27 +65,41 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 
    @Override
    public List<Item> consultarItemsDisponibles() {
-       throw new UnsupportedOperationException("Not supported yet.");
+       return itemDAO.consultarItems();
    }
 
    @Override
    public long consultarMultaAlquiler(int iditem, Date fechaDevolucion) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   int multa = itemDAO.consultarValorMulta(iditem);
+	   Date fechaFin = itemDAO.consultarFechaFinItemRentado(iditem);
+       int dias = (int) ((fechaDevolucion.getTime()-fechaFin.getTime())/86400000);
+       return multa*dias;
+       
+       
    }
 
    @Override
    public TipoItem consultarTipoItem(int id) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+       try {
+		return itemDAO.load(id).getTipo();
+	} catch (PersistenceException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return null;		
+	}
    }
 
    @Override
    public List<TipoItem> consultarTiposItem() throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+       throw new UnsupportedOperationException("Not supported yet."); 	
    }
 
    @Override
    public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   Calendar calendar = Calendar.getInstance();
+	   calendar.setTime(date);
+	   calendar.add(Calendar.DAY_OF_YEAR, numdias);
+       itemRentadoDAO.insertarItem((int)docu, date , (Date) calendar.getTime(), item.getId());
    }
 
    @Override

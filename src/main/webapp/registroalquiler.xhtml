@@ -1,0 +1,87 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@germanAOQ 
+AlejandroBohal
+/
+CVDS-LAB08
+forked from Sim0no/CVDS-LAB08
+0
+01
+ Code Pull requests 0 Actions Projects 0 Wiki Security Insights
+CVDS-LAB08/src/main/webapp/registroalquiler.xhtml
+@Sim0no Sim0no terminando managed bean 2
+9da9d89 on 11 Oct 2019
+@Sim0no@AlejandroBohal
+53 lines (47 sloc)  2.71 KB
+  
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="style.css"></link>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    </h:head>
+    <h:body>
+        <h:form id="formularioAlq">
+            <p:dataTable  var="itemRentado" value="#{servAlquiler.getClienteSeleccionado().rentados}" 
+                             selectionMode="single" 
+                             paginator="true"
+                             paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+                             rows="8"
+                             rowKey="#{itemRentado.id}">
+
+                <f:facet name="header">
+                    Cliente #{servAlquiler.getClienteSeleccionado().nombre}
+                </f:facet>
+                <p:column headerText="Item Rentado">
+                    <h:outputText value="#{itemRentado.item.nombre}" />
+                </p:column>
+                <p:column headerText="Fecha Inicio Renta">
+                    <h:outputText value="#{itemRentado.fechainiciorenta}" />
+                </p:column>    
+                <p:column headerText="Fecha Fin Renta">
+                    <h:outputText value="#{itemRentado.fechafinrenta}" />
+                </p:column>  
+             </p:dataTable>
+            <h:panelGrid id="grid" cellpadding="5" columns="2" class="panelCenter" style="margin-bottom:10px">
+                <p:outputLabel for="IdItem" value="IdItem: " />
+                <p:inputText id="IdItem" type="int" binding="#{iditem}" />
+                <p:outputLabel for="Dias" value="Dias: " />
+                
+                <p:inputText id="Dias" type="int" binding="#{dias}"/>
+
+                <p:outputLabel value="Precio: " />
+                <p:outputLabel value="#{servAlquiler.costo}" />
+                 
+                <p:commandButton update="formularioAlq" class="Button" actionListener="#{servAlquiler.registrarAlquiler(servAlquiler.clienteSeleccionado.documento,iditem.value,dias.value)}" value="Registrar Alquiler"/>
+                <p:commandButton update="formularioAlq" class="Button" actionListener="#{servAlquiler.consultarCostoRenta(iditem.value,dias.value)}" value="Consultar precio"/>
+            </h:panelGrid>
+         </h:form>
+        
+        
+    </h:body>
+</html>
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About

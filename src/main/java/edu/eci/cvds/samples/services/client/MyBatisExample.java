@@ -23,21 +23,30 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import edu.eci.cvds.sampleprj.dao.mybatis.MyBATISClienteDAO;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper;
+import edu.eci.cvds.samples.entities.Item;
+import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
+import edu.eci.cvds.samples.services.impl.ServiciosAlquilerImpl;
 
 /**
  *
  * @author hcadavid
  */
 public class MyBatisExample {
+	
+	private static ServiciosAlquiler serviciosAlquiler = ServiciosAlquilerFactory.getInstance().getServiciosAlquiler();
 
     /**
      * Método que construye una fábrica de sesiones de MyBatis a partir del
@@ -65,7 +74,7 @@ public class MyBatisExample {
      * @throws SQLException 
      */
     public static void main(String args[]) throws SQLException {
-
+    	
         SqlSessionFactory sessionfact = getSqlSessionFactory();
         
 		//Crear el mapper y usarlo:
@@ -73,11 +82,24 @@ public class MyBatisExample {
         //Crear el mapper y usarlo:
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
         ItemMapper im=sqlss.getMapper(ItemMapper.class);
-		
+        ItemRentadoMapper ir=sqlss.getMapper(ItemRentadoMapper.class);
+        
+        Date date = new Date(2020,03,27);
+        Date date2 = new Date(2020,03,28);
+        ir.insertarItemRentado(2132797, 2, 6, date, date2);
+        sqlss.commit();
+        
+        //System.out.print(im.consultarItemRentado(2).get(0).toString().toCharArray()[8]
+        //		+im.consultarItemRentado(2).get(0).toString().toCharArray()[9]);
+        //im.consultarValorMulta((int)1);
+        //im.consultarItems();
+        	
+        
         //cm 
-        System.out.println(cm.consultarClientes());
+        //System.out.println(cm.consultarClientes());
         //Consulta usuario Roberto
 
+        /*
         System.out.println(cm.consultarCliente(447744114));
         Date date1 = null;
         Date date2 = null;
@@ -90,6 +112,7 @@ public class MyBatisExample {
 		cm.agregarItemRentadoACliente(2132668,-33, 2, date1, date2);
         im.insertarItem(111112, "Tapabocas", "Prevenir esparcimiento de particulas",date1 ,10,"prueba", "aseo",2);
         sqlss.commit();
+        */
 
         
         

@@ -1,6 +1,7 @@
 package edu.eci.cvds.sampleprj.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 
@@ -11,6 +12,8 @@ public interface ClienteDAO {
 
    public void save(int ipd, int id, int idit, Date fechainicio, Date fechafin) throws PersistenceException;
 
-   public Cliente load(int id) throws PersistenceException;
+   public abstract Cliente load(int id) throws PersistenceException;
+   
+   public abstract List<Cliente> consultarCliente();
 
 }

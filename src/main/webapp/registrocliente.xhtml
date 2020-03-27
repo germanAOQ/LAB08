@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="style.css"></link>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    </h:head>
+    <h:body>
+        <h:form id="formulario">
+        
+            <p:dataTable id="singleDT" var="cliente" value="#{servAlquiler.consultarClientes()}" 
+                         selectionMode="single" selection="#{servAlquiler.clienteSeleccionado}"
+                         paginator="true"
+                         paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+                         rowKey="#{cliente.documento}"  rows="8">
+                <f:facet name="header">
+                    Clientes Tienda videos
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{cliente.documento}" />
+                </p:column>
+                <p:column headerText="name">
+                    <h:outputText value="#{cliente.nombre}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{cliente.email}" />
+                </p:column>
+                <p:column headerText="Addr">
+                    <h:outputText value="#{cliente.direccion}" />
+                </p:column>
+                <p:column headerText="Tel">
+                    <h:outputText value="#{cliente.telefono}" />
+                </p:column>
+                <p:column headerText="V">
+                    <h:outputText value="#{cliente.vetado}" />
+                </p:column>
+
+                <f:facet name="footer">
+                    <h:commandButton action = "#{navigationController.moveToPageAlquiler()}" value = "Buscar" />
+                </f:facet>
+
+            </p:dataTable>
+
+            <h:panelGrid id="grid" cellpadding="5" columns="2" class="panelCenter" style="margin-bottom:10px">
+                <p:outputLabel for="Documento" value="Documento: " />
+                <p:inputText id="Documento" type="long" binding="#{documento}" />
+
+                <p:outputLabel for="Nombre" value="Nombre: "/>
+                <p:inputText id="Nombre" type="String" binding="#{nombre}"/>
+
+                <p:outputLabel for="Direccion" value="Direccion: "/>
+                <p:inputText id="Direccion" type="String" binding="#{direccion}"/>
+
+                <p:outputLabel for="Telefono" value="Telefono: " />
+                <p:inputText id="Telefono" type="String" binding="#{telefono}"/>
+
+                <p:outputLabel for="Email" value="Email: " />
+                <p:inputText id="Email" type="String" binding="#{email}"/>
+
+                <div class="divButton">
+                    
+                    <p:commandButton update="formulario" class="Button" actionListener="#{servAlquiler.registrarCliente(documento.value,nombre.value,telefono.value,direccion.value,email.value)}" value="Registrar Cliente"/>
+                </div>
+                
+            </h:panelGrid>
+
+            
+       </h:form>
+        
+        
+    </h:body>
+</html>
