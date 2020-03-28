@@ -26,8 +26,8 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
    private ItemDAO itemDAO;
    @Inject
    private ClienteDAO clienteDAO;
-   //@Inject
-   //private TipoItemDAO tipoItemDAO;
+   @Inject
+   private TipoItemDAO tipoItemDAO;
    @Inject
    private ItemRentadoDAO itemRentadoDAO;
 

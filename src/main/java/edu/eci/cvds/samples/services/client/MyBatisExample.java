@@ -90,7 +90,7 @@ public class MyBatisExample {
         //ir.insertarItemRentado(2132769, 2, 6, date, date2);
       
         try {
-			serviciosAlquiler.registrarItem(new Item(new TipoItem(4,"dsds"),102,"Computador","algo",new Date(2020-1900,3-1,27),15,"Bien","Terror"));
+			serviciosAlquiler.registrarItem(new Item(new TipoItem(4,"dsds"),104,"Computador","algoNuevo",new Date(2020-1900,3-1,27),15,"Bien","Terror"));
 		} catch (ExcepcionServiciosAlquiler e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

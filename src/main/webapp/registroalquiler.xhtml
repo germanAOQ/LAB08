@@ -1,87 +1,90 @@
-Skip to content
-Search or jump to…
+<?xml version="1.0" encoding="UTF-8"?>
 
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@germanAOQ 
-AlejandroBohal
-/
-CVDS-LAB08
-forked from Sim0no/CVDS-LAB08
-0
-01
- Code Pull requests 0 Actions Projects 0 Wiki Security Insights
-CVDS-LAB08/src/main/webapp/registroalquiler.xhtml
-@Sim0no Sim0no terminando managed bean 2
-9da9d89 on 11 Oct 2019
-@Sim0no@AlejandroBohal
-53 lines (47 sloc)  2.71 KB
-  
-<!DOCTYPE html>
-<html xmlns="http://www.w3c.org/1999/xhtml"
-xmlns:h="http://xmlns.jcp.org/jsf/html"
-xmlns:p="http://primefaces.org/ui"
-xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-    <link rel="stylesheet" href="style.css"></link>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Arvo" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    </h:head>
-    <h:body>
-        <h:form id="formularioAlq">
-            <p:dataTable  var="itemRentado" value="#{servAlquiler.getClienteSeleccionado().rentados}" 
-                             selectionMode="single" 
-                             paginator="true"
-                             paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
-                             rows="8"
-                             rowKey="#{itemRentado.id}">
+        <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-                <f:facet name="header">
-                    Cliente #{servAlquiler.getClienteSeleccionado().nombre}
-                </f:facet>
-                <p:column headerText="Item Rentado">
-                    <h:outputText value="#{itemRentado.item.nombre}" />
-                </p:column>
-                <p:column headerText="Fecha Inicio Renta">
-                    <h:outputText value="#{itemRentado.fechainiciorenta}" />
-                </p:column>    
-                <p:column headerText="Fecha Fin Renta">
-                    <h:outputText value="#{itemRentado.fechafinrenta}" />
-                </p:column>  
-             </p:dataTable>
-            <h:panelGrid id="grid" cellpadding="5" columns="2" class="panelCenter" style="margin-bottom:10px">
-                <p:outputLabel for="IdItem" value="IdItem: " />
-                <p:inputText id="IdItem" type="int" binding="#{iditem}" />
-                <p:outputLabel for="Dias" value="Dias: " />
-                
-                <p:inputText id="Dias" type="int" binding="#{dias}"/>
+<h:head> 
+<title> Servicio de Alquiler </title>
+<link rel="stylesheet" type="text/css"  />
+ </h:head>
 
-                <p:outputLabel value="Precio: " />
-                <p:outputLabel value="#{servAlquiler.costo}" />
-                 
-                <p:commandButton update="formularioAlq" class="Button" actionListener="#{servAlquiler.registrarAlquiler(servAlquiler.clienteSeleccionado.documento,iditem.value,dias.value)}" value="Registrar Alquiler"/>
-                <p:commandButton update="formularioAlq" class="Button" actionListener="#{servAlquiler.consultarCostoRenta(iditem.value,dias.value)}" value="Consultar precio"/>
-            </h:panelGrid>
-         </h:form>
+<style type="text/css">
+	body {
+		background-image:url("fondo.jpg");
+		background-size: 1250px 900px;
+		background-repeat:repeat;
+	}
+</style>
+<h:body>
+    <h:form id="Alquiler_Form">
         
         
-    </h:body>
+		
+        <br/>
+        <p:outputLabel class="labelCenter" style="font-size: 25px"><strong>Alquilar Item</strong></p:outputLabel>
+        
+		<h:panelGrid id="grid" cellpadding="10" columns="10" class="panelCenter" style="margin-bottom:10px">
+         
+		 <p:outputLabel value="Numero del Item: "/> 
+		 <p:inputText id="itid" type="int" binding="#{itid}"/> 
+
+           <p:outputLabel value="Dias a Alquilar:"/> 
+		   <p:inputText id="ndias" type="int" binding="#{dias}"/> 
+
+           <p:outputLabel value="Costo: "/> 
+		   <p:outputLabel value="#{AlquilerItemsBean.costo}"/>
+		   <p:commandButton class="Button" value="Alquilar" action="registrocliente?faces-redirect = true" >
+                <f:actionListener binding="#{AlquilerItemsBean.registrarAlquilerCliente(itid.value,dias.value)}"/>
+           </p:commandButton>
+		   <p:commandButton class="Button" value="Mostrar Costo" action="#{AlquilerItemsBean.consultarCosto(itid.value,dias.value)}" update="Alquiler_Form"/>
+        
+			
+			
+		 </h:panelGrid>
+		
+		<p:dataTable var="itrent" value="#{AlquilerItemsBean.getSelectedCliente().rentados}"
+					 paginator="true" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rows="10">
+			<f:facet name="header">
+                Items Alquilados
+            </f:facet>
+            <p:column headerText="Item Rentado">
+                <h:outputText value="#{itrent.item.nombre}"/>
+            </p:column>
+			
+			<p:column headerText="Multa">
+                <h:outputText value="#{AlquilerItemsBean.consultarMulta(itrent.item)}"/>
+            </p:column>
+			
+        <!--
+		<h2 class="titulo" align="center">!Alquiler!</h2>
+		<h:form id="guess_form">
+			<p:outputLabel value="#{ParteIV.numero}"  style="display:none"/>
+			<p class="texto1" align="center">BIENVENIDO</p>
+			<p class="texto2" align="center">ID item: <p:outputLabel value="#{ParteIV.intentos}"/></p>
+			<p class="texto2" align="center" color= "green">Item: <p:outputLabel value="#{AlquilerItemsBean.consultarCosto(itid.value,dias.value)}" />
+			<p class="texto1" align="center"><p:outputLabel value="#{AlquilerItemsBean.consultarCosto(itid.value,dias.value)}"/></p>
+			<p align="center"><p:inputText style="background:#{'white'}"  binding="#{input}"/></p>
+			<p align="center"><p:commandButton class="texto" value="Probar" update="guess_form" actionListener="#{AlquilerItemsBean.consultarCosto(itid.value,dias.value)}" style="background:#{'blue'}"/><p:commandButton class="texto" value="Reiniciar" update="guess_form" actionListener="#{ParteIV.restart()}" style="background:#{'yellow'}"/></p>
+			<div align="center"><p:dataTable var="numDias" value="#{AlquilerItemsBean.consultarCosto(itid.value,dias.value)}" style="width:150px;">
+				<p:column headerText="Numeros intentados: " class="tabla">
+					<div align="center"><h:outputText value= "#{AlquilerItemsBean.consultarCosto(itid.value,dias.value)}/></div>
+				</p:column>
+			</p:dataTable></div>
+		</h:form>
+		-->	
+			
+        </p:dataTable>
+
+
+
+
+
+    </h:form>
+</h:body>
+
+
 </html>
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
