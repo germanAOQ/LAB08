@@ -6,6 +6,6 @@ import edu.eci.cvds.samples.entities.Item;
 
 public interface ItemRentadoDAO {
 	
-	void insertarItem(int id, Date fechainicio, Date fechafin, int item);
+	void insertarItemRentado(int id, Date fechainicio, Date fechafin, int item);
 
 }

@@ -7,6 +7,7 @@ import edu.eci.cvds.sampleprj.dao.ItemDAO;
 import edu.eci.cvds.sampleprj.dao.ItemRentadoDAO;
 import edu.eci.cvds.sampleprj.dao.PersistenceException;
 import edu.eci.cvds.sampleprj.dao.TipoItemDAO;
+import edu.eci.cvds.sampleprj.dao.mybatis.MyBATISClienteDAO;
 import edu.eci.cvds.samples.entities.Cliente;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
@@ -99,30 +100,52 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
 	   Calendar calendar = Calendar.getInstance();
 	   calendar.setTime(date);
 	   calendar.add(Calendar.DAY_OF_YEAR, numdias);
-       itemRentadoDAO.insertarItem((int)docu, date , (Date) calendar.getTime(), item.getId());
+       itemRentadoDAO.insertarItemRentado((int)docu, date , (Date) calendar.getTime(), item.getId());
    }
 
    @Override
    public void registrarCliente(Cliente c) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   int vetado;
+	   if(c.isVetado()){
+		   vetado=0;
+	   }else {
+		   vetado=1;
+	   }
+       clienteDAO.saveCliente((int) c.getDocumento(), c.getNombre(), c.getTelefono(), c.getDireccion(), c.getEmail(), vetado);
    }
 
    @Override
    public long consultarCostoAlquiler(int iditem, int numdias) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+	   long res = 0;
+	   try {
+		   Item temp = itemDAO.load(iditem);
+		   res = temp.getTarifaxDia()*numdias;
+	   } catch (PersistenceException e) {
+		   // TODO Auto-generated catch block
+		   e.printStackTrace();
+	   }
+	   return res;
+
    }
 
    @Override
    public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet.");
+       itemDAO.actualizarTarifa(id, (int) tarifa);
    }
    @Override
    public void registrarItem(Item i) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	   try {
+		itemDAO.save(i);
+	} catch (PersistenceException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
 
    @Override
    public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	   int vet = 0;
+	   if(estado) vet = 1;
+	   clienteDAO.actualizarVetado((int)docu, vet);
    }
 }

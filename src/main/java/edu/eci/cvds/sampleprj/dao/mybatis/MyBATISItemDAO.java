@@ -22,7 +22,7 @@ public class MyBATISItemDAO implements ItemDAO{
 	@Override
 	public void save(Item it) throws PersistenceException{
 		try{
-			itemMapper.insertarItem(it);
+			itemMapper.insertarItem(it.getId(),it.getNombre(),it.getDescripcion(),it.getFechaLanzamiento(),it.getTarifaxDia(),it.getFormatoRenta(),it.getGenero(),it.getTipo().getID() );
 		}
 		catch(org.apache.ibatis.exceptions.PersistenceException e){
 			throw new PersistenceException("Error al registrar el item "+it.toString(),e);
@@ -57,6 +57,12 @@ public class MyBATISItemDAO implements ItemDAO{
 	@Override
 	public Date consultarFechaFinItemRentado(int idItem) {
 		return (Date) itemMapper.consultarItemRentado(idItem).get(0);
+	}
+
+	@Override
+	public void actualizarTarifa(int id, int tarifa) {
+		itemMapper.updateTarifaDia(id, tarifa);
+		
 	}
 
 

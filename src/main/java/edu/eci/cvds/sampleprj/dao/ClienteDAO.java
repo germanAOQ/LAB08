@@ -15,5 +15,9 @@ public interface ClienteDAO {
    public abstract Cliente load(int id) throws PersistenceException;
    
    public abstract List<Cliente> consultarCliente();
+   
+   public void saveCliente(int documento, String nombre, String telefono, String direccion, String email, int vetado);
+   
+   public void actualizarVetado(int id, int vetado);
 
 }

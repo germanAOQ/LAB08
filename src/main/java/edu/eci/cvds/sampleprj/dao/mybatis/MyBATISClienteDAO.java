@@ -32,5 +32,17 @@ public class MyBATISClienteDAO implements ClienteDAO{
 	public List<Cliente> consultarCliente() {
 		return clienteMapper.consultarClientes();
 	}
+
+	@Override
+	public void saveCliente(int documento, String nombre, String telefono, String direccion, String email, int vetado) {
+		clienteMapper.insertarCliente(documento, nombre, telefono, direccion, vetado);
+		
+	}
+
+	@Override
+	public void actualizarVetado(int id, int vetado) {
+		clienteMapper.updateVetado(id, vetado);
+		
+	}
 	
 }

@@ -19,5 +19,7 @@ public interface ItemDAO {
    public abstract List<Item> consultarItems();
    
    public abstract Date consultarFechaFinItemRentado(int idItem);
+   
+   public abstract void actualizarTarifa(int id, int tarifa);
 
 }

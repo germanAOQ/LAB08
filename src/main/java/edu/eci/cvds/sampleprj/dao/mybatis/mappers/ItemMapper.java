@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.ItemRentado;
+import edu.eci.cvds.samples.entities.TipoItem;
 
 /**
  *
@@ -22,10 +23,12 @@ public interface ItemMapper {
     
     public void insertarItem(Item it);
 
-	public void insertarItem(@Param("id") int id,@Param("nombre") String nombre,@Param("descripcion") String descripcion,@Param("fechaLanzamiento") Date fechalanzamiento,@Param("tarifaxDia") int tarifaxdia,@Param("formatoRenta") String formatorenta,@Param("genero") String genero,@Param("tipo_id") int TIPOITEM_id);
+	public void insertarItem(@Param("id") int id,@Param("nombre") String nombre,@Param("descripcion") String descripcion,@Param("fechaLanzamiento") Date fechalanzamiento,@Param("tarifaxDia") long l,@Param("formatoRenta") String formatorenta,@Param("genero") String genero,@Param("tipo_id") int tipoItem);
 
 	public Item consultarValorMulta(@Param("itemid") int itemId);
 	
 	public ArrayList consultarItemRentado(@Param("itid") int ip);
+	
+	public void updateTarifaDia(@Param("id")int id,@Param("txd") int tarifa);
         
 }

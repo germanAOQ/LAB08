@@ -14,8 +14,8 @@ public class MyBATISItemRentadoDAO implements ItemRentadoDAO{
 	ItemRentadoMapper itemRentadoMapper;
 
 	@Override
-	public void insertarItem(int id, Date fechainicio, Date fechafin, int item) {
-		itemRentadoMapper.insertarItemRentado(id, fechainicio, fechafin, item);
+	public void insertarItemRentado(int id, Date fechainicio, Date fechafin, int item) {
+		itemRentadoMapper.insertarItemRentadoD(id,item, fechainicio, fechafin);
 	}
 	
 

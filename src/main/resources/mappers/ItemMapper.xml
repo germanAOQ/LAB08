@@ -64,8 +64,12 @@
 	<select parameterType="map" id="consultarValorMulta" resultMap="ItemResult">
 		select tarifaxdia from VI_ITEMS where id = #{itemid};
 	</select> 	
-
-
+	
+	<update id="updateTarifaDia">
+	update VI_ITEMS set tarifaxdia = #{txd}
+	where id = #{id}
+	</update>
+	
     <resultMap type='Item' id='ItemResult'>
 		<id property='id' column='id'/>
 		<result property='nombre' column='nombre'/>

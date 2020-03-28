@@ -8,7 +8,9 @@
 	<insert parameterType="map" id="insertarItemRentado">
 	insert into VI_ITEMRENTADO (id,CLIENTES_documento,ITEMS_id,fechainiciorenta,fechafinrenta) values (#{id},#{cliente},#{item},#{fechainiciorenta},#{fechafinrenta})
 	</insert>
-	
+	<insert parameterType="map" id="insertarItemRentadoD">
+	insert into VI_ITEMRENTADO (CLIENTES_documento,ITEMS_id,fechainiciorenta,fechafinrenta) values (#{cliente},#{item},#{fechainiciorenta},#{fechafinrenta})
+	</insert>
 	
 	
     <resultMap type='ItemRentado' id='ItemRentadoResult'>

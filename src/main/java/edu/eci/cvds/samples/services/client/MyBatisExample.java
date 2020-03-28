@@ -35,6 +35,7 @@ import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper;
 import edu.eci.cvds.samples.entities.Item;
+import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
@@ -82,12 +83,19 @@ public class MyBatisExample {
         //Crear el mapper y usarlo:
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
         ItemMapper im=sqlss.getMapper(ItemMapper.class);
-        ItemRentadoMapper ir=sqlss.getMapper(ItemRentadoMapper.class);
+        //ItemRentadoMapper ir=sqlss.getMapper(ItemRentadoMapper.class);
         
-        Date date = new Date(2020,03,27);
-        Date date2 = new Date(2020,03,28);
-        ir.insertarItemRentado(2132797, 2, 6, date, date2);
-        sqlss.commit();
+        //Date date = new Date(2020-1900,3-1,27);
+        //Date date2 = new Date(2020-1900,3-1,28);
+        //ir.insertarItemRentado(2132769, 2, 6, date, date2);
+      
+        try {
+			serviciosAlquiler.registrarItem(new Item(new TipoItem(4,"dsds"),102,"Computador","algo",new Date(2020-1900,3-1,27),15,"Bien","Terror"));
+		} catch (ExcepcionServiciosAlquiler e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //System.out.print(im.consultarItems());
         
         //System.out.print(im.consultarItemRentado(2).get(0).toString().toCharArray()[8]
         //		+im.consultarItemRentado(2).get(0).toString().toCharArray()[9]);
